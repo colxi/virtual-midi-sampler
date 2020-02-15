@@ -1,0 +1,20 @@
+import MachineContext from '@/main'
+
+export default class MidiPortOutput {
+  constructor(vmContext: MachineContext) {
+    this._vmContext = vmContext
+    this.connected = []
+    this.availableDevices = []
+  }
+
+  private _vmContext: MachineContext
+
+  public readonly connected: WebMidi.MIDIOutput[]
+
+  public readonly availableDevices: WebMidi.MIDIOutput[]
+
+  public broadcast(message: number[]): void {
+    for (const device of this.connected) device.send(message)
+    return
+  }
+}

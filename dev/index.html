@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <script type="module">
+      import '../bundle.js'
+      const MidiSampler = __MODULE_DEFAULT_EXPORT__
+      window.sampler1 = new MidiSampler({ debugMode: true })
+      window.sampler2 = new MidiSampler({ debugMode: false })
+
+      async function init() {
+        await sampler1.patch[0].keymap[61].loadSample('../assets/ding.mp3')
+        await sampler1.patch[0].keymap[62].loadSample('../assets/B4.mp3')
+        await sampler1.patch[0].keymap[63].loadSample('../assets/test.mp3')
+        sampler1.channel[0].setPatch(0)
+      }
+
+      init()
+
+      function update() {
+        requestAnimationFrame(update)
+        let DOM = {
+          sampler1: {
+            availableInputs: document.getElementById('sampler1-inputs'),
+            availableOutputs: document.getElementById('sampler1-outputs'),
+            midiIn: document.getElementById('sampler1-midi-in'),
+            midiOut: document.getElementById('sampler1-midi-out')
+          }
+        }
+        DOM.sampler1.availableInputs.innerHTML = sampler1.devices.input
+          .map(d => `${d.name} (${d.id})`)
+          .join('<br>')
+        DOM.sampler1.availableOutputs.innerHTML = sampler1.devices.output
+          .map(d => `${d.name} (${d.id})`)
+          .join('<br>')
+        DOM.sampler1.midiIn.innerHTML = sampler1.port.midiIn
+          .map(d => `${d.name} (${d.id})`)
+          .join('<br>')
+        DOM.sampler1.midiOut.innerHTML = sampler1.port.midiOut
+          .map(d => `${d.name} (${d.id})`)
+          .join('<br>')
+      }
+
+      update()
+    </script>
+  </head>
+  <body>
+    <div>
+      <h1>Sampler1</h1>
+      <div>
+        <h3>Available Inputs</h3>
+        <span id="sampler1-inputs"></span>
+      </div>
+      <div>
+        <h3>Available Outputs</h3>
+        <span id="sampler1-outputs"></span>
+      </div>
+      <div>
+        <h3>MidiIn (connected)</h3>
+        <span id="sampler1-midi-in"></span>
+      </div>
+      <div>
+        <h3>MidiOut (connected)</h3>
+        <span id="sampler1-midi-out"></span>
+      </div>
+    </div>
+    <!--
+    <div onclick="sampler.patch[0].loadPreset('../assets/presets/grand-piano')">
+      Load Preset
+    </div>
+    <div onclick="sampler.channel[0].noteOn(61)">play Key 61</div>
+    <div onclick="sampler.channel[0].noteOn(62)">play Key 62</div>
+    <div onclick="sampler.channel[0].noteOn(63)">play Key 63</div>
+    <div onclick="sampler.gain +=.2">master volumeUp</div>
+    <div onclick="sampler.gain -=.2">master volumeDown</div>
+    <div onclick="sampler.panic()">panic</div>
+    <div onclick="sampler.destroy()">destroy</div>
+    -->
+  </body>
+</html>

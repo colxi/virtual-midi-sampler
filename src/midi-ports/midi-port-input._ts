@@ -1,0 +1,26 @@
+import MachineContext from '@/main'
+
+export default class MidiPortInput {
+  constructor(vmContext: MachineContext) {
+    this._vmContext = vmContext
+    this.connected = []
+    this.availableDevices = []
+    this.onMessageListener = this.onMessageListener.bind(this)
+  }
+  private _vmContext: MachineContext
+
+  public readonly connected: WebMidi.MIDIInput[]
+
+  public readonly availableDevices: WebMidi.MIDIInput[]
+
+  private onMessageListener(e: any): void {
+    if (
+      this._vmContext.port.cyclicConnectionsTestRunning &&
+      e.data[0] === 0xfe
+    ) {
+      this._vmContext.port.cyclicConnectionsDetected = true
+    } else {
+      //
+    }
+  }
+}

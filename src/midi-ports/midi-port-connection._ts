@@ -1,0 +1,41 @@
+import MachineContext from '@/main'
+import MidiDevice from '@/midi-devices/midi-device-input'
+import { MidiDeviceSupported } from '@/types'
+
+export default class MidiPortConnection {
+  constructor(
+    vmContext: MachineContext,
+    deviceEntry: MidiDevice,
+    device: MidiDeviceSupported
+  ) {
+    this._vmContext = vmContext
+    this._deviceEntry = deviceEntry
+    this._device = device
+
+    this._onMessageListener = this._onMessageListener.bind(this)
+
+    if (this._deviceEntry.port === 'input') {
+      //
+    } else this.send = this._send
+  }
+  private _vmContext: MachineContext
+  private _deviceEntry: MidiDevice
+  private _device: MidiDeviceSupported
+
+  private _onMessageListener(e: any): void {
+    if (
+      this._vmContext.port.cyclicConnectionsTestRunning &&
+      e.data[0] === 0xfe
+    ) {
+      this._vmContext.port.cyclicConnectionsDetected = true
+    } else {
+      //
+    }
+  }
+
+  public send?: (message: number[]) => void
+  private _send(message: number[]): void {
+    // this._device.send(message)
+    return
+  }
+}

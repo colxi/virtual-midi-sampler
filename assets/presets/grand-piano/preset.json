@@ -1,0 +1,438 @@
+{
+  "name": "grand-piano",
+  "formatVersion": 1,
+  "description": "",
+  "license": "MIT License",
+  "keymap": [
+    {
+      "key": 23,
+      "name": "B0",
+      "source": "audio/B-0.mp3"
+    },
+    {
+      "key": 24,
+      "name": "C1",
+      "source": "audio/C-1.mp3"
+    },
+    {
+      "key": 25,
+      "name": "C#1",
+      "source": "audio/C-SHARP-1.mp3"
+    },
+    {
+      "key": 26,
+      "name": "D1",
+      "source": "audio/D-1.mp3"
+    },
+    {
+      "key": 27,
+      "name": "D#1",
+      "source": "audio/D-SHARP-1.mp3"
+    },
+    {
+      "key": 28,
+      "name": "E1",
+      "source": "audio/E-1.mp3"
+    },
+    {
+      "key": 29,
+      "name": "F1",
+      "source": "audio/F-1.mp3"
+    },
+    {
+      "key": 30,
+      "name": "F#1",
+      "source": "audio/F-SHARP-1.mp3"
+    },
+    {
+      "key": 31,
+      "name": "G1",
+      "source": "audio/G-1.mp3"
+    },
+    {
+      "key": 32,
+      "name": "G#1",
+      "source": "audio/G-SHARP-1.mp3"
+    },
+    {
+      "key": 33,
+      "name": "A1",
+      "source": "audio/A-1.mp3"
+    },
+    {
+      "key": 34,
+      "name": "A#1",
+      "source": "audio/A-SHARP-1.mp3"
+    },
+    {
+      "key": 35,
+      "name": "B1",
+      "source": "audio/B-1.mp3"
+    },
+    {
+      "key": 36,
+      "name": "C2",
+      "source": "audio/C-2.mp3"
+    },
+    {
+      "key": 37,
+      "name": "C#2",
+      "source": "audio/C-SHARP-2.mp3"
+    },
+    {
+      "key": 38,
+      "name": "D2",
+      "source": "audio/D-2.mp3"
+    },
+    {
+      "key": 39,
+      "name": "D#2",
+      "source": "audio/D-SHARP-2.mp3"
+    },
+    {
+      "key": 40,
+      "name": "E2",
+      "source": "audio/E-2.mp3"
+    },
+    {
+      "key": 41,
+      "name": "F2",
+      "source": "audio/F-2.mp3"
+    },
+    {
+      "key": 42,
+      "name": "F#2",
+      "source": "audio/F-SHARP-2.mp3"
+    },
+    {
+      "key": 43,
+      "name": "G2",
+      "source": "audio/G-2.mp3"
+    },
+    {
+      "key": 44,
+      "name": "G#2",
+      "source": "audio/G-SHARP-2.mp3"
+    },
+    {
+      "key": 45,
+      "name": "A2",
+      "source": "audio/A-2.mp3"
+    },
+    {
+      "key": 46,
+      "name": "A#2",
+      "source": "audio/A-SHARP-2.mp3"
+    },
+    {
+      "key": 47,
+      "name": "B2",
+      "source": "audio/B-2.mp3"
+    },
+    {
+      "key": 48,
+      "name": "C3",
+      "source": "audio/C-3.mp3"
+    },
+    {
+      "key": 49,
+      "name": "C#3",
+      "source": "audio/C-SHARP-3.mp3"
+    },
+    {
+      "key": 50,
+      "name": "D3",
+      "source": "audio/D-3.mp3"
+    },
+    {
+      "key": 51,
+      "name": "D#3",
+      "source": "audio/D-SHARP-3.mp3"
+    },
+    {
+      "key": 52,
+      "name": "E3",
+      "source": "audio/E-3.mp3"
+    },
+    {
+      "key": 53,
+      "name": "F3",
+      "source": "audio/F-3.mp3"
+    },
+    {
+      "key": 54,
+      "name": "F#3",
+      "source": "audio/F-SHARP-3.mp3"
+    },
+    {
+      "key": 55,
+      "name": "G3",
+      "source": "audio/G-3.mp3"
+    },
+    {
+      "key": 56,
+      "name": "G#3",
+      "source": "audio/G-SHARP-3.mp3"
+    },
+    {
+      "key": 57,
+      "name": "A3",
+      "source": "audio/A-3.mp3"
+    },
+    {
+      "key": 58,
+      "name": "A#3",
+      "source": "audio/A-SHARP-3.mp3"
+    },
+    {
+      "key": 59,
+      "name": "B3",
+      "source": "audio/B-3.mp3"
+    },
+    {
+      "key": 60,
+      "name": "C4",
+      "source": "audio/C-4.mp3"
+    },
+    {
+      "key": 61,
+      "name": "C#4",
+      "source": "audio/C-SHARP-4.mp3"
+    },
+    {
+      "key": 62,
+      "name": "D4",
+      "source": "audio/D-4.mp3"
+    },
+    {
+      "key": 63,
+      "name": "D#4",
+      "source": "audio/D-SHARP-4.mp3"
+    },
+    {
+      "key": 64,
+      "name": "E4",
+      "source": "audio/E-4.mp3"
+    },
+    {
+      "key": 65,
+      "name": "F4",
+      "source": "audio/F-4.mp3"
+    },
+    {
+      "key": 66,
+      "name": "F#4",
+      "source": "audio/F-SHARP-4.mp3"
+    },
+    {
+      "key": 67,
+      "name": "G4",
+      "source": "audio/G-4.mp3"
+    },
+    {
+      "key": 68,
+      "name": "G#4",
+      "source": "audio/G-SHARP-4.mp3"
+    },
+    {
+      "key": 69,
+      "name": "A4",
+      "source": "audio/A-4.mp3"
+    },
+    {
+      "key": 70,
+      "name": "A#4",
+      "source": "audio/A-SHARP-4.mp3"
+    },
+    {
+      "key": 71,
+      "name": "B4",
+      "source": "audio/B-4.mp3"
+    },
+    {
+      "key": 72,
+      "name": "C5",
+      "source": "audio/C-5.mp3"
+    },
+    {
+      "key": 73,
+      "name": "C#5",
+      "source": "audio/C-SHARP-5.mp3"
+    },
+    {
+      "key": 74,
+      "name": "D5",
+      "source": "audio/D-5.mp3"
+    },
+    {
+      "key": 75,
+      "name": "D#5",
+      "source": "audio/D-SHARP-5.mp3"
+    },
+    {
+      "key": 76,
+      "name": "E5",
+      "source": "audio/E-5.mp3"
+    },
+    {
+      "key": 77,
+      "name": "F5",
+      "source": "audio/F-5.mp3"
+    },
+    {
+      "key": 78,
+      "name": "F#5",
+      "source": "audio/F-SHARP-5.mp3"
+    },
+    {
+      "key": 79,
+      "name": "G5",
+      "source": "audio/G-5.mp3"
+    },
+    {
+      "key": 80,
+      "name": "G#5",
+      "source": "audio/G-SHARP-5.mp3"
+    },
+    {
+      "key": 81,
+      "name": "A5",
+      "source": "audio/A-5.mp3"
+    },
+    {
+      "key": 82,
+      "name": "A#5",
+      "source": "audio/A-SHARP-5.mp3"
+    },
+    {
+      "key": 83,
+      "name": "B5",
+      "source": "audio/B-5.mp3"
+    },
+    {
+      "key": 84,
+      "name": "C6",
+      "source": "audio/C-6.mp3"
+    },
+    {
+      "key": 85,
+      "name": "C#6",
+      "source": "audio/C-SHARP-6.mp3"
+    },
+    {
+      "key": 86,
+      "name": "D6",
+      "source": "audio/D-6.mp3"
+    },
+    {
+      "key": 87,
+      "name": "D#6",
+      "source": "audio/D-SHARP-6.mp3"
+    },
+    {
+      "key": 88,
+      "name": "E6",
+      "source": "audio/E-6.mp3"
+    },
+    {
+      "key": 89,
+      "name": "F6",
+      "source": "audio/F-6.mp3"
+    },
+    {
+      "key": 90,
+      "name": "F#6",
+      "source": "audio/F-SHARP-6.mp3"
+    },
+    {
+      "key": 91,
+      "name": "G6",
+      "source": "audio/G-6.mp3"
+    },
+    {
+      "key": 92,
+      "name": "G#6",
+      "source": "audio/G-SHARP-6.mp3"
+    },
+    {
+      "key": 93,
+      "name": "A6",
+      "source": "audio/A-6.mp3"
+    },
+    {
+      "key": 94,
+      "name": "A#6",
+      "source": "audio/A-SHARP-6.mp3"
+    },
+    {
+      "key": 95,
+      "name": "B6",
+      "source": "audio/B-6.mp3"
+    },
+    {
+      "key": 96,
+      "name": "C7",
+      "source": "audio/C-7.mp3"
+    },
+    {
+      "key": 97,
+      "name": "C#7",
+      "source": "audio/C-SHARP-7.mp3"
+    },
+    {
+      "key": 98,
+      "name": "D7",
+      "source": "audio/D-7.mp3"
+    },
+    {
+      "key": 99,
+      "name": "D#7",
+      "source": "audio/D-SHARP-7.mp3"
+    },
+    {
+      "key": 100,
+      "name": "E7",
+      "source": "audio/E-7.mp3"
+    },
+    {
+      "key": 101,
+      "name": "F7",
+      "source": "audio/F-7.mp3"
+    },
+    {
+      "key": 102,
+      "name": "F#7",
+      "source": "audio/F-SHARP-7.mp3"
+    },
+    {
+      "key": 103,
+      "name": "G7",
+      "source": "audio/G-7.mp3"
+    },
+    {
+      "key": 104,
+      "name": "G#7",
+      "source": "audio/G-SHARP-7.mp3"
+    },
+    {
+      "key": 105,
+      "name": "A7",
+      "source": "audio/A-7.mp3"
+    },
+    {
+      "key": 106,
+      "name": "A#7",
+      "source": "audio/A-SHARP-7.mp3"
+    },
+    {
+      "key": 107,
+      "name": "B7",
+      "source": "audio/B-7.mp3"
+    },
+    {
+      "key": 108,
+      "name": "C8",
+      "source": "audio/C-8.mp3"
+    }
+  ]
+}
