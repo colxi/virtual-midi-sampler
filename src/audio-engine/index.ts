@@ -61,31 +61,31 @@ export default class AudioEngineInterface {
   public constructor(audioOutput?: AudioContext | AudioNode) {
     // Define audio context
     if (!audioOutput) {
-      this._isExternalAudioContext = false
-      this._audioContext = new AudioContext()
+      this.#isExternalAudioContext = false
+      this.#audioContext = new AudioContext()
     } else {
-      this._isExternalAudioContext = true
-      this._audioContext =
+      this.#isExternalAudioContext = true
+      this.#audioContext =
         audioOutput instanceof AudioContext
           ? audioOutput
           : (audioOutput.context as AudioContext)
     }
     // create Master Volume Node
-    this._masterVolumeNode = this._audioContext.createGain()
+    this.#masterVolumeNode = this.#audioContext.createGain()
     const destination: AudioDestinationNode | AudioNode =
       !audioOutput || audioOutput instanceof AudioContext
-        ? this._audioContext.destination
+        ? this.#audioContext.destination
         : audioOutput
-    this._masterVolumeNode.connect(destination)
+    this.#masterVolumeNode.connect(destination)
     // generate the Channel Audio interfaces Collection
     this.midiChannel = new MidiChannelAudioInterfaceCollection(
-      this._masterVolumeNode
+      this.#masterVolumeNode
     )
   }
 
-  private readonly _isExternalAudioContext: boolean
-  private readonly _audioContext: AudioContext
-  private readonly _masterVolumeNode: GainNode
+  readonly #isExternalAudioContext: boolean
+  readonly #audioContext: AudioContext
+  readonly #masterVolumeNode: GainNode
 
   /** Midi Channels Audio Interfaces */
   public readonly midiChannel: MidiChannelAudioInterfaceCollection
@@ -101,29 +101,29 @@ export default class AudioEngineInterface {
 
   /** Returns the audio context output latency (of -1 when not available) */
   public get outputLatency(): number {
-    return this._audioContext.outputLatency || -1
+    return this.#audioContext.outputLatency || -1
   }
 
   /** Returns the audio context sample Rate (of -1 when not available) */
   public get sampleRate(): number {
-    return this._audioContext.sampleRate || -1
+    return this.#audioContext.sampleRate || -1
   }
 
   /** Boolean flag to determine if using external audio context */
   public get isExternalAudioContext(): boolean {
-    return this._isExternalAudioContext
+    return this.#isExternalAudioContext
   }
 
   /** Convert an Array buffer to an AudioBuffer */
   public async decodeAudioData(arrayBuffer: ArrayBuffer): Promise<AudioBuffer> {
-    return await this._audioContext.decodeAudioData(arrayBuffer)
+    return await this.#audioContext.decodeAudioData(arrayBuffer)
   }
 
   /** returns the volume of the master */
   public getVolume(): MidiVolume {
     // convert GainNode volume value to MidiVolume
     const volume = Math.round(
-      this._masterVolumeNode.gain.value * 127
+      this.#masterVolumeNode.gain.value * 127
     ) as MidiVolume
     return volume
   }
@@ -135,9 +135,9 @@ export default class AudioEngineInterface {
     if (channelVolume > 127) channelVolume = 127
     // convert  midi volume to GainNode volume
     const volume = channelVolume / 127
-    this._masterVolumeNode.gain.setValueAtTime(
+    this.#masterVolumeNode.gain.setValueAtTime(
       volume,
-      this._audioContext.currentTime
+      this.#audioContext.currentTime
     )
     return true
   }

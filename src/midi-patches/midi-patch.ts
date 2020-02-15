@@ -60,38 +60,38 @@ function isValidPresetJSON(
 
 export default class MidiPatch {
   constructor(_vmContext: MachineContext, id: MidiPatchId) {
-    this._vmContext = _vmContext
-    this._id = id
-    this._name = 'Unnamed'
-    this._preset = ''
+    this.#vmContext = _vmContext
+    this.#id = id
+    this.#name = 'Unnamed'
+    this.#preset = ''
     this.keymap = new MidiPatchKeymapCollection(_vmContext)
   }
-
-  private readonly _vmContext: MachineContext
-  private readonly _id: MidiPatchId
-  private _name: string
-  private _preset: string
+ 
+  readonly #vmContext: MachineContext
+  readonly #id: MidiPatchId
+  #name: string
+  #preset: string
 
   public readonly keymap: MidiPatchKeymapCollection
 
   /** Patch id */
   public get id(): MidiPatchId {
-    return this._id
+    return this.#id
   }
 
   /** Patch  Name */
   public get name(): string {
-    return this._name
+    return this.#name
   }
 
   /** Preset file location */
   public get preset(): string {
-    return this._preset
+    return this.#preset
   }
 
   /** Sets the patch name */
   public setName(name: string): void {
-    this._name = name
+    this.#name = name
     return
   }
 
@@ -139,16 +139,16 @@ export default class MidiPatch {
       }
     }
     // set preset metadata
-    this._name = patchPreset.name || ''
-    this._preset = patchPresetFullPath
+    this.#name = patchPreset.name || ''
+    this.#preset = patchPresetFullPath
     // done
     return
   }
 
   /** Reset the Patch metadata and keymaps */
   public reset(): void {
-    this._name = 'Unnamed'
-    this._preset = ''
+    this.#name = 'Unnamed'
+    this.#preset = ''
     for (const keymap of this.keymap) keymap.reset()
     return
   }

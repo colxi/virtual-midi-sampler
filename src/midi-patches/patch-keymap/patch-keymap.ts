@@ -22,37 +22,37 @@ import { fetchAudio } from '@/common'
 
 export default class MidiPatchKeymap {
   constructor(_vmContext: MachineContext, id: MidiKeymapId) {
-    this._vmContext = _vmContext
-    this._id = id
-    this._name = 'Unnamed'
-    this._source = ''
-    this._audioBuffer = null
+    this.#vmContext = _vmContext
+    this.#id = id
+    this.#name = 'Unnamed'
+    this.#source = ''
+    this.#audioBuffer = null
   }
 
-  private readonly _vmContext: MachineContext
-  private readonly _id: MidiKeymapId
-  private _name: string
-  private _source: string
-  private _audioBuffer: AudioBuffer | null
+  readonly #vmContext: MachineContext
+  readonly #id: MidiKeymapId
+  #name: string
+  #source: string
+  #audioBuffer: AudioBuffer | null
 
   /** Patch keymap id (0-127) */
   public get id(): MidiKeymapId {
-    return this._id
+    return this.#id
   }
 
   /** Patch keymap name */
   public get name(): string {
-    return this._name
+    return this.#name
   }
 
   /** Patch keymap audio source */
   public get source(): string {
-    return this._source
+    return this.#source
   }
 
   /** Patch keymap sample audio data */
   public get audioBuffer(): AudioBuffer | null {
-    return this._audioBuffer
+    return this.#audioBuffer
   }
 
   /** Load and assign to the Patch keymap the the requested Sample */
@@ -60,30 +60,30 @@ export default class MidiPatchKeymap {
     // fetch and decode sample
     let audioBuffer: AudioBuffer
     try {
-      audioBuffer = await fetchAudio(path, this._vmContext.audio)
+      audioBuffer = await fetchAudio(path, this.#vmContext.audio)
     } catch (e) {
       throw new SamplerError(
         `Missing or invalid audio file ("${path}") : ${e.message}`
       )
     }
     // Assign the audio data to the patch keymap
-    this._audioBuffer = audioBuffer
-    this._source = path
+    this.#audioBuffer = audioBuffer
+    this.#source = path
     // done!
     return
   }
 
   /** Load and assign to the Patch keymap the the requested Keymap preset */
   public async loadPreset(presetOptions: MidiKeymapPresetJSON): Promise<void> {
-    this._name = presetOptions.name || 'Unnamed'
+    this.#name = presetOptions.name || 'Unnamed'
     if (presetOptions.source) return this.loadSample(presetOptions.source)
     return
   }
 
   /** Reset the Patch keymap configuration and audio data */
   public reset(): void {
-    this._name = 'Unnamed'
-    this._source = ''
-    this._audioBuffer = null
+    this.#name = 'Unnamed'
+    this.#source = ''
+    this.#audioBuffer = null
   }
 }

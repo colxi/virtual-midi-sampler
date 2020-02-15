@@ -30,53 +30,53 @@ import MidiDeviceOutput from './midi-device-output'
 
 export default class MidiDevicesInterface {
   constructor(vmContext: MachineContext) {
-    this._vmContext = vmContext
+    this.#vmContext = vmContext
     this.input = []
     this.output = []
-    this._onDeviceStateChange = this._onDeviceStateChange.bind(this)
-    this._watchDevices().catch(e => {
+    this.#onDeviceStateChange = this.#onDeviceStateChange.bind(this)
+    this.#watchDevices().catch(e => {
       throw e
     })
   }
 
-  private readonly _vmContext: MachineContext
+  readonly #vmContext: MachineContext
   public readonly input: MidiDeviceInput[]
   public readonly output: MidiDeviceOutput[]
 
-  private async _watchDevices(): Promise<void> {
+  #watchDevices = async (): Promise<void> =>{
     // --- Virtual Midi Instrument Devices
     // register existing virtual devices
     for (const device of window.__MIDI_VIRTUAL_MACHINES__) {
-      this._registerDevice(device)
+      this.#registerDevice(device)
     }
     // listen for new connected virtual devices
-    window.addEventListener('statechange-vmi', this._onDeviceStateChange, false)
+    window.addEventListener('statechange-vmi', this.#onDeviceStateChange, false)
 
     // --- Physical Midi Instrument Devices
     const midiAccess: WebMidi.MIDIAccess = await navigator.requestMIDIAccess()
     // register existing virtual devices
     for (const device of midiAccess.inputs.values()) {
-      this._registerDevice(device)
+      this.#registerDevice(device)
     }
     for (const device of midiAccess.outputs.values()) {
-      this._registerDevice(device)
+      this.#registerDevice(device)
     }
     // listen for new connected virtual devices
     if (Object.prototype.hasOwnProperty.call(midiAccess, 'addEventListener')) {
       midiAccess.addEventListener(
         'statechange',
-        this._onDeviceStateChange,
+        this.#onDeviceStateChange,
         false
       )
     } else {
       // ...or JazzMidi plugin compatible syntax
-      midiAccess.onstatechange = this._onDeviceStateChange
+      midiAccess.onstatechange = this.#onDeviceStateChange
     }
 
     // TODO: Remove listeners on instrument destroy
   }
 
-  private _onDeviceStateChange(e: Event): void {
+  #onDeviceStateChange= (e: Event): void =>{
     let device: MidiDeviceSupported
     let state: string
     // --- Virtual Midi Instrument Devices
@@ -95,36 +95,36 @@ export default class MidiDevicesInterface {
     else throw new SamplerError('Unknown device detected')
 
     // block if device its self
-    if (device.id === this._vmContext.id) return
+    if (device.id === this.#vmContext.id) return
     // Register/unregister device
-    if (state === 'connected') this._registerDevice(device)
-    else if (state === 'disconnected') this._unregisterDevice(device)
+    if (state === 'connected') this.#registerDevice(device)
+    else if (state === 'disconnected') this.#unregisterDevice(device)
     else throw new SamplerError('Unknown device state detected:' + state)
   }
 
-  private _registerDevice(device: MidiDeviceSupported): void {
+  #registerDevice = (device: MidiDeviceSupported): void =>{
     console.log(device)
     // --- Virtual Midi Instrument Devices
     if (device.type === 'vmi') {
       if (this.input.filter(d => d.id === device.id).length) return
-      this.input.push(new MidiDeviceInput(this._vmContext, device))
+      this.input.push(new MidiDeviceInput(this.#vmContext, device))
       if (this.output.filter(d => d.id === device.id).length) return
-      this.output.push(new MidiDeviceOutput(this._vmContext, device))
+      this.output.push(new MidiDeviceOutput(this.#vmContext, device))
     }
     // --- Physical Midi Instrument Devices
     else if (device.type === 'input') {
       if (this.input.filter(d => d.id === device.id).length) return
-      this.input.push(new MidiDeviceInput(this._vmContext, device))
+      this.input.push(new MidiDeviceInput(this.#vmContext, device))
     } else if (device.type === 'output') {
       if (this.output.filter(d => d.id === device.id).length) return
-      this.output.push(new MidiDeviceOutput(this._vmContext, device))
+      this.output.push(new MidiDeviceOutput(this.#vmContext, device))
     }
     // --- Unknown Device type
     else throw new SamplerError('Cannot register unknown device')
   }
 
-  private _unregisterDevice(device: MidiDeviceSupported): void {
-    console.log('unregistewring')
+  #unregisterDevice = (device: MidiDeviceSupported): void => {
+    console.log('unregistering', device)
     // TODO: unregister and disconnect if connections are active
   }
 }

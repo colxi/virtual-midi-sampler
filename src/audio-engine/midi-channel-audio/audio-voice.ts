@@ -11,54 +11,55 @@ export default class AudioVoice {
     channelVolumeMaster: GainNode,
     activeVoices: AudioVoicesActive
   ) {
-    this._voiceId = voiceId
+    this.#voiceId = voiceId
     // extract the audio context from the gain master node
-    this._audioContext = channelVolumeMaster.context as AudioContext
+    this.#audioContext = channelVolumeMaster.context as AudioContext
     // Create an audio Source Node using the provided Audio Buffer
-    this._audioSourceNode = this._audioContext.createBufferSource()
-    this._audioSourceNode.buffer = audioBuffer
+    this.#audioSourceNode = this.#audioContext.createBufferSource()
+    this.#audioSourceNode.buffer = audioBuffer
     // Create a gain note with  the provided volume (velocity)
-    this._gainNode = this._audioContext.createGain()
-    this._gainNode.gain.setValueAtTime(
+    this.#gainNode = this.#audioContext.createGain()
+    this.#gainNode.gain.setValueAtTime(
       midiNoteVelocity / 127,
-      this._audioContext.currentTime
+      this.#audioContext.currentTime
     )
     // Perform the connections : AudioSource -> GainNode -> AudioMaster
-    this._audioSourceNode.connect(this._gainNode)
-    this._gainNode.connect(channelVolumeMaster)
+    this.#audioSourceNode.connect(this.#gainNode)
+    this.#gainNode.connect(channelVolumeMaster)
     // Generate a bound listener (to prevent lose the context on callback time)
-    this._onVoiceEndListener = this.destroy.bind(this)
-    this._audioSourceNode.addEventListener('ended', this._onVoiceEndListener)
+    this.#onVoiceEndListener = this.destroy.bind(this)
+    this.#audioSourceNode.addEventListener('ended', this.#onVoiceEndListener)
     // set the voice in the channel active voices collection
-    this._activeVoices = activeVoices
-    this._activeVoices[voiceId] = this
+    this.#activeVoices = activeVoices
+    this.#activeVoices[voiceId] = this
     // Done! Play the audio!
-    this._audioSourceNode.start()
+    this.#audioSourceNode.start()
   }
-  private readonly _audioContext: AudioContext
-  private readonly _voiceId: MidiNoteId
-  private readonly _audioSourceNode: AudioBufferSourceNode
-  private readonly _gainNode: GainNode
-  private readonly _activeVoices: AudioVoicesActive
-  private readonly _onVoiceEndListener: () => void
+
+  readonly #audioContext: AudioContext
+  readonly #voiceId: MidiNoteId
+  readonly #audioSourceNode: AudioBufferSourceNode
+  readonly #gainNode: GainNode
+  readonly #activeVoices: AudioVoicesActive
+  readonly #onVoiceEndListener: () => void
 
   /** Destroys the Voice gracefully */
   public destroy(): void {
     // remove the on end event listener
-    this._audioSourceNode.removeEventListener('ended', this._onVoiceEndListener)
+    this.#audioSourceNode.removeEventListener('ended', this.#onVoiceEndListener)
     // delete the voice from the channel active voices collection
-    delete this._activeVoices[this._voiceId]
+    delete this.#activeVoices[this.#voiceId]
     //  Avoid audio clipping by setting vol to 0 gradually, before destroying
-    this._gainNode.gain.setTargetAtTime(
+    this.#gainNode.gain.setTargetAtTime(
       0,
-      this._audioContext.currentTime,
+      this.#audioContext.currentTime,
       FADE_OUT_SPEED
     )
     // stop and disconnect nodes to allow garbage collector discard the elements
     setTimeout(() => {
-      this._audioSourceNode.stop()
-      this._gainNode.disconnect()
-      this._audioSourceNode.disconnect()
+      this.#audioSourceNode.stop()
+      this.#gainNode.disconnect()
+      this.#audioSourceNode.disconnect()
     }, DESTROY_VOICE_DELAY)
   }
 }

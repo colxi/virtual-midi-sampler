@@ -7,36 +7,36 @@ const CYCLIC_CONNECTION_TEST_DURATION = 500
 
 export default class MidiPortsInterface {
   constructor(vmContext: MachineContext) {
-    this._vmContext = vmContext
+    this.#vmContext = vmContext
     this.cyclicConnectionsTestRunning = false
     this.cyclicConnectionsDetected = false
     return
   }
 
-  private readonly _vmContext: MachineContext
+  readonly #vmContext: MachineContext
 
   public get midiIn(): MidiDeviceInput[] {
-    return Object.values(this._vmContext.devices.input).filter(
+    return Object.values(this.#vmContext.devices.input).filter(
       d => d.status === 'connected'
     )
   }
 
   public get midiOut(): MidiDeviceOutput[] {
-    return Object.values(this._vmContext.devices.output).filter(
+    return Object.values(this.#vmContext.devices.output).filter(
       d => d.status === 'connected'
     )
   }
 
   public get midiThru(): any /* MidiDeviceOutput */ {
     return true
-    //return Object.values(this._vmContext.devices.output).filter(
+    //return Object.values(this.#vmContext.devices.output).filter(
     //  d => d.status === 'connected'
     //)
   }
   public cyclicConnectionsTestRunning: boolean
   public cyclicConnectionsDetected: boolean
 
-  private async _startCyclicConnectionTest(): Promise<boolean> {
+  #startCyclicConnectionTest = async (): Promise<boolean> =>{
     return new Promise(resolve => {
       /*
       this.cyclicConnectionsTestRunning = true
@@ -62,7 +62,7 @@ export default class MidiPortsInterface {
       if (device.addEventListener) {
         device.addEventListener('midimessage', this.onMessageListener)
       } else device.onmidimessage = this.onMessageListener
-      if (await this._vmContext.port._startCyclicConnectionTest()) {
+      if (await this.#vmContext.port.#startCyclicConnectionTest()) {
         this.disconnectDevice(device)
         console.warn(
           `Warning: circular Loop detected when connecting device ${device.id}. Device disconnected.`

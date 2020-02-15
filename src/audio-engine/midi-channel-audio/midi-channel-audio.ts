@@ -9,21 +9,21 @@ import {
 
 export default class MidiChannelAudioInterface {
   public constructor(masterGain: GainNode, id: MidiChannelId) {
-    this._id = id
-    this._audioContext = masterGain.context as AudioContext
-    this._channelMasterVolumeNode = this._audioContext.createGain()
-    this._channelMasterVolumeNode.connect(masterGain)
+    this.#id = id
+    this.#audioContext = masterGain.context as AudioContext
+    this.#channelMasterVolumeNode = this.#audioContext.createGain()
+    this.#channelMasterVolumeNode.connect(masterGain)
     this.activeVoices = {}
   }
-  private readonly _id: MidiChannelId
-  private readonly _audioContext: AudioContext
-  private readonly _channelMasterVolumeNode: GainNode
 
+  readonly #id: MidiChannelId
+  readonly #audioContext: AudioContext
+  readonly #channelMasterVolumeNode: GainNode
   public readonly activeVoices: AudioVoicesActive
 
   /** Midi Channel Audio Interface id */
   public get id(): MidiChannelId {
-    return this._id
+    return this.#id
   }
 
   /** Create a new voice with the provided audio buffer and note metadata */
@@ -40,7 +40,7 @@ export default class MidiChannelAudioInterface {
         midiNoteId,
         audioBuffer,
         midiNoteVelocity,
-        this._channelMasterVolumeNode,
+        this.#channelMasterVolumeNode,
         this.activeVoices
       )
     }
@@ -58,7 +58,7 @@ export default class MidiChannelAudioInterface {
   public getVolume(): MidiVolume {
     // convert GainNode volume value to MidiVolume
     const volume = Math.round(
-      this._channelMasterVolumeNode.gain.value * 127
+      this.#channelMasterVolumeNode.gain.value * 127
     ) as MidiVolume
     return volume
   }
@@ -70,9 +70,9 @@ export default class MidiChannelAudioInterface {
     if (channelVolume > 127) channelVolume = 127
     // convert  midi volume to GainNode volume
     const volume = channelVolume / 127
-    this._channelMasterVolumeNode.gain.setValueAtTime(
+    this.#channelMasterVolumeNode.gain.setValueAtTime(
       volume,
-      this._audioContext.currentTime
+      this.#audioContext.currentTime
     )
     return true
   }
