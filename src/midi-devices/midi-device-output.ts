@@ -1,5 +1,5 @@
 import MachineContext from '@/main'
-import { MidiDeviceSupported, SamplerError } from '@/types'
+import { SamplerError } from '@/types'
 
 type MidiDevicePort = 'input' | 'output'
 type MidiDeviceType = 'vmi' | 'midi'

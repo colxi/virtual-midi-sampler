@@ -50,16 +50,16 @@ import MidiPortsInterface from '@/midi-ports/'
 
 import { MidiSamplerOptions } from './types/'
 
-// Create a global container to store the references to the any virtual
-// instrument of the family. This allows The machines to detect other
-// instances of instruments to be used as input or output(global as any).__MIDI_VIRTUAL_MACHINES__ =
+// Create a global container to store the references to any virtual device
+// of the family (vmd.js). This allows the virtual machines to detect each other
+// in order to create connections between them
 window.__MIDI_VIRTUAL_MACHINES__ = window.__MIDI_VIRTUAL_MACHINES__ || []
 
 /**
- * MIDI Sampler Virtual Machine
+ * Virtual MIDI Sampler main Class
  */
 export default class MidiSampler {
-  private constructor(options: MidiSamplerOptions = {}) {
+  constructor(options: MidiSamplerOptions = {}) {
     this.#id = String(Math.round(Math.random() * 10000000000))
     this.#name = 'Virtual Midi Sampler Instrument'
     this.#type = 'vmi' // Virtual Midi Instrument JS
@@ -84,10 +84,12 @@ export default class MidiSampler {
       throw e
     })
     */
+
+    // Prevent non typescript environments add or remove class members the class
   }
 
+  #name: string
   readonly #id: string
-  readonly #name: string
   readonly #type: 'vmi'
   readonly #manufacturer: string
   public readonly channel: MidiChannelsInterface
@@ -111,6 +113,10 @@ export default class MidiSampler {
     return this.#manufacturer
   }
 
+  public setName(name: string): void{
+    this.#name= name
+  }
+
   public send(data: number[] | Uint8Array, timestamp?: number): void {
     //
     for (const device of this.port.midiOut) {
@@ -119,3 +125,5 @@ export default class MidiSampler {
     }
   }
 }
+
+
